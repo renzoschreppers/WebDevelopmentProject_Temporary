@@ -69,6 +69,7 @@ class WeekMenu extends Component
     {
         return Menu::query()
             ->with(['dishes' => fn ($query) => $query
+                ->where('is_available', true)
                 ->with('dietaryTags')
                 ->orderBy('dish_menu.sort_order')])
             ->whereBetween('date', [

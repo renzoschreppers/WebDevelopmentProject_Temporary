@@ -87,7 +87,7 @@
                         @if ($menu && $menu->dishes->isNotEmpty())
                             @php $byCourse = $menu->dishes->groupBy(fn ($dish) => $dish->pivot->course); @endphp
 
-                            <div class="flex flex-col gap-5">
+                            <div class="flex flex-col gap-8">
                                 @foreach (\App\Models\Menu::COURSES as $course => $label)
                                     @if ($byCourse->has($course))
                                         <div class="flex flex-col gap-2">

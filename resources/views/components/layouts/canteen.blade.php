@@ -47,6 +47,7 @@
 </flux:main>
 
 <x-layouts.canteen.info />
+<x-itf.notifications />
 
 @fluxScripts
 @stack('scripts')

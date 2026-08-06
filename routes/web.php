@@ -2,6 +2,9 @@
 
 use App\Http\Middleware\ActiveUser;
 use App\Http\Middleware\Admin;
+use App\Livewire\Admin\Categories;
+use App\Livewire\Admin\DietaryTags;
+use App\Livewire\Admin\Dishes;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -42,6 +45,9 @@ Route::middleware(['auth', ActiveUser::class, Admin::class])
     ->name('admin.')
     ->group(function () {
         Route::view('/', 'admin.dashboard')->name('dashboard');
+        Route::get('categories', Categories::class)->name('categories');
+        Route::get('dietary-tags', DietaryTags::class)->name('dietary-tags');
+        Route::get('dishes', Dishes::class)->name('dishes');
     });
 
 require __DIR__.'/auth.php';

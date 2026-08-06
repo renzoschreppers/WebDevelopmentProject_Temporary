@@ -25,8 +25,15 @@
                 <flux:navlist.item icon="chart-bar" :href="route('admin.dashboard')" :current="request()->routeIs('admin.dashboard')" wire:navigate>
                     Dashboard
                 </flux:navlist.item>
-                <flux:navlist.item icon="cake" href="#" wire:navigate>Dishes</flux:navlist.item>
-                <flux:navlist.item icon="tag" href="#" wire:navigate>Categories</flux:navlist.item>
+                <flux:navlist.item icon="cake" :href="route('admin.dishes')" :current="request()->routeIs('admin.dishes')" wire:navigate>
+                    Dishes
+                </flux:navlist.item>
+                <flux:navlist.item icon="tag" :href="route('admin.categories')" :current="request()->routeIs('admin.categories')" wire:navigate>
+                    Categories
+                </flux:navlist.item>
+                <flux:navlist.item icon="sparkles" :href="route('admin.dietary-tags')" :current="request()->routeIs('admin.dietary-tags')" wire:navigate>
+                    Dietary tags
+                </flux:navlist.item>
                 <flux:navlist.item icon="calendar-days" href="#" wire:navigate>Menus</flux:navlist.item>
                 <flux:navlist.item icon="users" href="#" wire:navigate>Users</flux:navlist.item>
             </flux:navlist.group>
