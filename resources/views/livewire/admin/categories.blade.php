@@ -33,8 +33,8 @@
                     <th class="p-3">
                         <button wire:click="resort('name')" class="font-semibold">Name</button>
                     </th>
-                    <th class="hidden p-3 md:table-cell">Description</th>
-                    <th class="p-3">Dishes</th>
+                    <th class="p-3 font-semibold">Description</th>
+                    <th class="p-3 font-semibold">Dishes</th>
                     <th class="p-3"></th>
                 </tr>
                 </thead>
@@ -43,7 +43,7 @@
                     <tr wire:key="category-{{ $category->id }}" class="border-b border-zinc-100 last:border-0 dark:border-zinc-800">
                         <td class="p-3 tabular-nums">{{ $category->sort_order }}</td>
                         <td class="p-3 font-medium">{{ $category->name }}</td>
-                        <td class="hidden p-3 text-zinc-500 md:table-cell">{{ $category->description }}</td>
+                        <td class="p-3 text-zinc-500">{{ $category->description }}</td>
                         <td class="p-3">
                             <button wire:click="showDishes({{ $category->id }})">
                                 <flux:badge size="sm" class="hover:opacity-70">{{ $category->dishes_count }}</flux:badge>
@@ -110,6 +110,19 @@
             <flux:heading size="lg">
                 {{ $form->id ? 'Edit category' : 'New category' }}
             </flux:heading>
+
+            @if ($errors->any())
+                <flux:callout variant="danger" icon="exclamation-triangle">
+                    <flux:callout.heading>Please fix the following</flux:callout.heading>
+                    <flux:callout.text>
+                        <ul class="list-inside list-disc">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </flux:callout.text>
+                </flux:callout>
+            @endif
 
             <flux:input wire:model="form.name" label="Name" placeholder="e.g. Main Courses" />
 

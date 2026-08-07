@@ -3,6 +3,8 @@
 namespace App\Livewire\Forms;
 
 use App\Models\Dish;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Laravel\Facades\Image;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
 
@@ -23,10 +25,15 @@ class DishForm extends Form
     /** @var array<int> */
     public array $tag_ids = [];
 
+    public $newImage = null;
+
+    public ?string $image = null;
+
     protected $validationAttributes = [
         'category_id' => 'category',
         'tag_ids' => 'dietary tags',
         'is_available' => 'availability',
+        'newImage' => 'image',
     ];
 
     protected $messages = [
@@ -43,6 +50,7 @@ class DishForm extends Form
             'is_available' => 'boolean',
             'tag_ids' => 'array',
             'tag_ids.*' => 'integer|exists:dietary_tags,id',
+            'newImage' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:8192',
         ];
     }
 
@@ -54,6 +62,8 @@ class DishForm extends Form
 
         $this->price = (string) $dish->price;
         $this->tag_ids = $dish->dietaryTags->pluck('id')->all();
+        $this->image = $dish->image;
+        $this->newImage = null;
     }
 
     public function create(): Dish
@@ -62,6 +72,7 @@ class DishForm extends Form
 
         $dish = Dish::create($this->payload());
         $dish->dietaryTags()->sync($this->tag_ids);
+        $this->storeImage($dish);
 
         return $dish;
     }
@@ -73,6 +84,7 @@ class DishForm extends Form
         $dish = Dish::findOrFail($this->id);
         $dish->update($this->payload());
         $dish->dietaryTags()->sync($this->tag_ids);
+        $this->storeImage($dish);
 
         return $dish;
     }
@@ -86,5 +98,44 @@ class DishForm extends Form
             'price' => $this->price,
             'is_available' => $this->is_available,
         ];
+    }
+
+    /* Resize the uploaded image to a square thumbnail and store it.
+    Named after the dish id so each dish has at most one image file. */
+    protected function storeImage(Dish $dish): void
+    {
+        if (! $this->newImage) {
+            return;
+        }
+
+        $path = "dishes/{$dish->id}.jpg";
+
+        $image = Image::read($this->newImage->getRealPath())
+            ->cover(600, 600)
+            ->toJpeg(75);
+
+        Storage::disk('public')->put($path, (string) $image);
+
+        $dish->update(['image' => $path]);
+        $dish->touch();
+
+        $this->image = $path;
+        $this->newImage = null;
+    }
+
+    public function deleteImage(): void
+    {
+        if (! $this->id) {
+            return;
+        }
+
+        $dish = Dish::findOrFail($this->id);
+
+        if ($dish->image) {
+            Storage::disk('public')->delete($dish->image);
+            $dish->update(['image' => null]);
+        }
+
+        $this->image = null;
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Facades\Storage;
 
 class Dish extends Model
 {
@@ -43,6 +44,24 @@ class Dish extends Model
     public function hasPriceOverride(): bool
     {
         return $this->pivot?->price_override !== null;
+    }
+
+    protected function imageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->image
+                ? Storage::disk('public')->url($this->image).'?v='.$this->updated_at?->timestamp
+                : null,
+        );
+    }
+
+    protected static function booted(): void
+    {
+        static::deleting(function (Dish $dish) {
+            if ($dish->image) {
+                Storage::disk('public')->delete($dish->image);
+            }
+        });
     }
 
     public function category(): BelongsTo

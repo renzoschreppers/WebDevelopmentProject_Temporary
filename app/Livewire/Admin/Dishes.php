@@ -11,12 +11,14 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Livewire\WithPagination;
 
 #[Layout('components.layouts.canteen', ['title' => 'Dishes'])]
 class Dishes extends Component
 {
     use NotificationsTrait;
+    use WithFileUploads;
     use WithPagination;
 
     public DishForm $form;
@@ -130,6 +132,12 @@ class Dishes extends Component
         $dish->delete();
 
         $this->toastSuccess("Dish <b>{$name}</b> has been deleted.");
+    }
+
+    public function removeImage(): void
+    {
+        $this->form->deleteImage();
+        $this->toastSuccess('Image removed.');
     }
 
     public function render()

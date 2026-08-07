@@ -83,6 +83,19 @@
         <div class="flex flex-col gap-4">
             <flux:heading size="lg">{{ $form->id ? 'Edit tag' : 'New tag' }}</flux:heading>
 
+            @if ($errors->any())
+                <flux:callout variant="danger" icon="exclamation-triangle">
+                    <flux:callout.heading>Please fix the following</flux:callout.heading>
+                    <flux:callout.text>
+                        <ul class="list-inside list-disc">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </flux:callout.text>
+                </flux:callout>
+            @endif
+
             <flux:input wire:model.live.debounce.300ms="form.name" label="Name" placeholder="e.g. Vegetarian" />
 
             <flux:select wire:model.live="form.icon" label="Icon">

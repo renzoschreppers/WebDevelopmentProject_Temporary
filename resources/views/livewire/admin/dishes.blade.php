@@ -1,3 +1,5 @@
+@use('Illuminate\Support\Facades\Storage')
+
 <div class="flex flex-col gap-6">
 
     {{-- Toolbar --}}
@@ -6,7 +8,7 @@
             <flux:input
                 wire:model.live.debounce.300ms="search"
                 icon="magnifying-glass"
-                placeholder="Search name or description"
+                placeholder="Search dishes"
                 clearable
                 class="sm:max-w-xs"
             />
@@ -65,6 +67,7 @@
             <table class="w-full text-left text-sm">
                 <thead class="border-b border-zinc-200 dark:border-zinc-700">
                 <tr>
+                    <th class="p-3 w-16"></th>
                     <th class="p-3"><button wire:click="resort('name')" class="font-semibold">Dish</button></th>
                     <th class="p-3"><button wire:click="resort('category')" class="font-semibold">Category</button></th>
                     <th class="hidden p-3 lg:table-cell font-semibold">Tags</th>
@@ -79,6 +82,22 @@
                             'border-b border-zinc-100 last:border-0 dark:border-zinc-800',
                             'opacity-60' => ! $dish->is_available,
                         ])>
+                        <td class="p-3">
+                            <div class="size-10 overflow-hidden rounded-md border border-zinc-200 dark:border-zinc-700">
+                                @if ($dish->image_url)
+                                    <flux:tooltip>
+                                        <img src="{{ $dish->image_url }}" alt="{{ $dish->name }}" class="size-full object-cover">
+                                        <flux:tooltip.content class="p-1">
+                                            <img src="{{ $dish->image_url }}" alt="" class="size-40 rounded object-cover">
+                                        </flux:tooltip.content>
+                                    </flux:tooltip>
+                                @else
+                                    <div class="flex size-full items-center justify-center">
+                                        <flux:icon.photo class="size-4 text-zinc-300 dark:text-zinc-600" />
+                                    </div>
+                                @endif
+                            </div>
+                        </td>
                         <td class="p-3">
                             <flux:text class="font-medium">{{ $dish->name }}</flux:text>
                         </td>
@@ -117,10 +136,23 @@
                     'opacity-60' => ! $dish->is_available,
                 ])>
                     <div class="flex items-start justify-between gap-3">
-                        <div class="flex flex-col">
-                            <flux:heading size="sm">{{ $dish->name }}</flux:heading>
-                            <flux:text size="sm" class="text-zinc-500">{{ $dish->category->name }}</flux:text>
+                        <div class="flex items-start gap-3">
+                            <div class="size-12 shrink-0 overflow-hidden rounded-md border border-zinc-200 dark:border-zinc-700">
+                                @if ($dish->image_url)
+                                    <img src="{{ $dish->image_url }}" alt="{{ $dish->name }}" class="size-full object-cover">
+                                @else
+                                    <div class="flex size-full items-center justify-center">
+                                        <flux:icon.photo class="size-4 text-zinc-300 dark:text-zinc-600" />
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="flex flex-col">
+                                <flux:heading size="sm">{{ $dish->name }}</flux:heading>
+                                <flux:text size="sm" class="text-zinc-500">{{ $dish->category->name }}</flux:text>
+                            </div>
                         </div>
+
                         <flux:text class="shrink-0 tabular-nums">{{ $dish->price_formatted }}</flux:text>
                     </div>
 
@@ -156,6 +188,19 @@
         <div class="flex flex-col gap-4">
             <flux:heading size="lg">{{ $form->id ? 'Edit dish' : 'New dish' }}</flux:heading>
 
+            @if ($errors->any())
+                <flux:callout variant="danger" icon="exclamation-triangle">
+                    <flux:callout.heading>Please fix the following</flux:callout.heading>
+                    <flux:callout.text>
+                        <ul class="list-inside list-disc">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </flux:callout.text>
+                </flux:callout>
+            @endif
+
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <flux:input wire:model="form.name" label="Name" placeholder="e.g. Tomato Soup" />
 
@@ -174,6 +219,46 @@
 
                 <div class="flex items-end">
                     <flux:switch wire:model="form.is_available" label="Available" />
+                </div>
+            </div>
+
+            {{-- Image --}}
+            <div class="flex flex-col gap-2">
+                <flux:label>Image</flux:label>
+
+                <div class="flex items-start gap-4">
+                    {{-- Preview --}}
+                    <div class="size-24 shrink-0 overflow-hidden rounded-lg border border-zinc-200 dark:border-zinc-700">
+                        @if ($form->newImage)
+                            <img src="{{ $form->newImage->temporaryUrl() }}" alt="Preview" class="size-full object-cover">
+                        @elseif ($form->image)
+                            <img src="{{ Storage::disk('public')->url($form->image) }}?v={{ time() }}" alt="Current image" class="size-full object-cover">
+                        @else
+                            <div class="flex size-full items-center justify-center">
+                                <flux:icon.photo class="size-8 text-zinc-300 dark:text-zinc-600" />
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="flex flex-1 flex-col gap-2">
+                        <flux:input type="file" wire:model="form.newImage" accept="image/*" />
+
+                        <flux:text size="sm" class="text-zinc-500">
+                            JPG, PNG or WebP. Max 8 MB. Cropped to a square.
+                        </flux:text>
+
+                        <div wire:loading wire:target="form.newImage">
+                            <flux:text size="sm" class="text-zinc-500">Uploading…</flux:text>
+                        </div>
+
+                        @if ($form->image)
+                            <div>
+                                <flux:button size="sm" variant="danger" icon="trash" wire:click="removeImage">
+                                    Remove image
+                                </flux:button>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
 
