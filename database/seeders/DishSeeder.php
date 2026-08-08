@@ -5,8 +5,9 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\DietaryTag;
 use App\Models\Dish;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class DishSeeder extends Seeder
 {
@@ -15,6 +16,9 @@ class DishSeeder extends Seeder
      */
     public function run(): void
     {
+        // Uploaded dish images no longer match any dish after a fresh seed.
+        Storage::disk('public')->deleteDirectory('dishes');
+
         $categories = Category::pluck('id', 'slug');
         $tags = DietaryTag::pluck('id', 'slug');
 
@@ -93,6 +97,24 @@ class DishSeeder extends Seeder
             $dish->dietaryTags()->attach(
                 collect($tagSlugs)->map(fn ($slug) => $tags[$slug])->all()
             );
+
+            $this->attachImage($dish);
         }
+    }
+
+    // Copy a seed image into storage if one exists for this dish.
+    protected function attachImage(Dish $dish): void
+    {
+        $source = database_path('seeders/images/'.Str::slug($dish->name).'.jpg');
+
+        if (! file_exists($source)) {
+            return;
+        }
+
+        $path = "dishes/{$dish->id}.jpg";
+
+        Storage::disk('public')->put($path, file_get_contents($source));
+
+        $dish->updateQuietly(['image' => $path]);
     }
 }

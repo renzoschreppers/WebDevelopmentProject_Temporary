@@ -5,6 +5,10 @@ use App\Http\Middleware\Admin;
 use App\Livewire\Admin\Categories;
 use App\Livewire\Admin\DietaryTags;
 use App\Livewire\Admin\Dishes;
+use App\Livewire\Admin\MenuPlanner;
+use App\Livewire\Admin\Menus;
+use App\Livewire\DishBrowser;
+use App\Livewire\DishDetail;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -20,6 +24,8 @@ Route::view('dashboard', 'dashboard')
     ->name('dashboard');
 
 Route::get('menu', WeekMenu::class)->name('menu');
+Route::get('dishes', DishBrowser::class)->name('dishes');
+Route::get('dishes/{dish}', DishDetail::class)->name('dishes.show');
 
 Route::middleware(['auth', ActiveUser::class])->group(function () {
     Route::redirect('settings', 'settings/profile');
@@ -48,6 +54,8 @@ Route::middleware(['auth', ActiveUser::class, Admin::class])
         Route::get('categories', Categories::class)->name('categories');
         Route::get('dietary-tags', DietaryTags::class)->name('dietary-tags');
         Route::get('dishes', Dishes::class)->name('dishes');
+        Route::get('menus', Menus::class)->name('menus');
+        Route::get('menus/{menu}/edit', MenuPlanner::class)->name('menus.edit');
     });
 
 require __DIR__.'/auth.php';

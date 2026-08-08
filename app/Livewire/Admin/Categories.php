@@ -54,6 +54,8 @@ class Categories extends Component
     {
         $this->form->reset();
         $this->resetValidation();
+
+        $this->form->sort_order = Category::count() + 1;
         $this->showModal = true;
     }
 

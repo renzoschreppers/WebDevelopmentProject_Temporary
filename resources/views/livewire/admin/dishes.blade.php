@@ -185,21 +185,10 @@
 
     {{-- Create / edit --}}
     <flux:modal wire:model.self="showModal" class="w-full max-w-2xl">
-        <div class="flex flex-col gap-4">
+        <div class="errors-in-summary flex flex-col gap-4">
             <flux:heading size="lg">{{ $form->id ? 'Edit dish' : 'New dish' }}</flux:heading>
 
-            @if ($errors->any())
-                <flux:callout variant="danger" icon="exclamation-triangle">
-                    <flux:callout.heading>Please fix the following</flux:callout.heading>
-                    <flux:callout.text>
-                        <ul class="list-inside list-disc">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </flux:callout.text>
-                </flux:callout>
-            @endif
+            <x-cm.error-summary :errors="$errors" />
 
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <flux:input wire:model="form.name" label="Name" placeholder="e.g. Tomato Soup" />

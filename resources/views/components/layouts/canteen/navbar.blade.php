@@ -7,7 +7,7 @@
         This week
     </flux:navlist.item>
 
-    <flux:navlist.item icon="squares-2x2" href="#" wire:navigate>
+    <flux:navlist.item icon="squares-2x2" :href="route('dishes')" :current="request()->routeIs('dishes')" wire:navigate>
         Dishes
     </flux:navlist.item>
 
@@ -34,7 +34,9 @@
                 <flux:navlist.item icon="sparkles" :href="route('admin.dietary-tags')" :current="request()->routeIs('admin.dietary-tags')" wire:navigate>
                     Dietary tags
                 </flux:navlist.item>
-                <flux:navlist.item icon="calendar-days" href="#" wire:navigate>Menus</flux:navlist.item>
+                <flux:navlist.item icon="calendar-days" :href="route('admin.menus')" :current="request()->routeIs('admin.menus')" wire:navigate>
+                    Menus
+                </flux:navlist.item>
                 <flux:navlist.item icon="users" href="#" wire:navigate>Users</flux:navlist.item>
             </flux:navlist.group>
         </flux:navlist>

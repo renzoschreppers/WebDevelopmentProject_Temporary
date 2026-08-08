@@ -16,7 +16,7 @@ class CategoryForm extends Form
 
     public ?string $description = null;
 
-    public int $sort_order = 0;
+    public int $sort_order = 1;
 
     protected $validationAttributes = [
         'name' => 'category name',
@@ -32,7 +32,7 @@ class CategoryForm extends Form
         return [
             'name' => "required|string|min:2|max:255|regex:/\p{L}/u|unique:categories,name,{$this->id}",
             'description' => 'nullable|string|max:255',
-            'sort_order' => 'required|integer|min:0|max:255',
+            'sort_order' => 'required|integer|min:1|max:255',
         ];
     }
 
@@ -47,12 +47,12 @@ class CategoryForm extends Form
                 ->reject(fn (Category $item) => $item->id === $category->id)
                 ->values();
 
-            $position = max(0, min($this->sort_order, $ordered->count()));
+            $position = max(0, min($this->sort_order - 1, $ordered->count()));
 
             $ordered->splice($position, 0, [$category]);
 
             $ordered->each(function (Category $item, int $index) {
-                $item->updateQuietly(['sort_order' => $index]);
+                $item->updateQuietly(['sort_order' => $index + 1]);
             });
         });
 
