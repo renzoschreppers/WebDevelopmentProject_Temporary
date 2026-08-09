@@ -6,7 +6,7 @@
     <div class="flex flex-col gap-3">
         <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <flux:input
-                wire:model.live.debounce.300ms="search"
+                wire:model.live.debounce.500ms="search"
                 icon="magnifying-glass"
                 placeholder="Search dishes"
                 clearable

@@ -7,8 +7,10 @@ use App\Livewire\Admin\DietaryTags;
 use App\Livewire\Admin\Dishes;
 use App\Livewire\Admin\MenuPlanner;
 use App\Livewire\Admin\Menus;
+use App\Livewire\Admin\Users;
 use App\Livewire\DishBrowser;
 use App\Livewire\DishDetail;
+use App\Livewire\Favorites;
 use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
@@ -44,6 +46,8 @@ Route::middleware(['auth', ActiveUser::class])->group(function () {
             ),
         )
         ->name('two-factor.show');
+
+    Route::get('favorites', Favorites::class)->name('favorites');
 });
 
 Route::middleware(['auth', ActiveUser::class, Admin::class])
@@ -56,6 +60,7 @@ Route::middleware(['auth', ActiveUser::class, Admin::class])
         Route::get('dishes', Dishes::class)->name('dishes');
         Route::get('menus', Menus::class)->name('menus');
         Route::get('menus/{menu}/edit', MenuPlanner::class)->name('menus.edit');
+        Route::get('users', Users::class)->name('users');
     });
 
 require __DIR__.'/auth.php';

@@ -12,8 +12,8 @@
     </flux:navlist.item>
 
     @auth
-        <flux:navlist.item icon="heart" href="#" wire:navigate>
-            My favourites
+        <flux:navlist.item icon="heart" :href="route('favorites')" :current="request()->routeIs('favorites')" wire:navigate>
+            My favorites
         </flux:navlist.item>
     @endauth
 </flux:navlist>
@@ -37,7 +37,9 @@
                 <flux:navlist.item icon="calendar-days" :href="route('admin.menus')" :current="request()->routeIs('admin.menus')" wire:navigate>
                     Menus
                 </flux:navlist.item>
-                <flux:navlist.item icon="users" href="#" wire:navigate>Users</flux:navlist.item>
+                <flux:navlist.item icon="users" :href="route('admin.users')" :current="request()->routeIs('admin.users')" wire:navigate>
+                    Users
+                </flux:navlist.item>
             </flux:navlist.group>
         </flux:navlist>
     @endif
