@@ -55,7 +55,7 @@
                                 @endif
 
                                 @unless ($menu->is_published)
-                                    <flux:badge size="sm" color="amber" icon="eye-slash">Draft</flux:badge>
+                                    <flux:badge size="sm" color="zinc" icon="eye-slash">Draft</flux:badge>
                                 @endunless
                             </div>
                         </td>
@@ -99,7 +99,7 @@
                             <div class="flex items-center gap-2">
                                 <flux:heading size="sm">{{ $menu->date->isoFormat('ddd D MMM YYYY') }}</flux:heading>
                                 @unless ($menu->is_published)
-                                    <flux:badge size="sm" color="amber" icon="eye-slash">Draft</flux:badge>
+                                    <flux:badge size="sm" color="zinc" icon="eye-slash">Draft</flux:badge>
                                 @endunless
                             </div>
                             @if ($menu->note)

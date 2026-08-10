@@ -21,14 +21,15 @@ class MenuSeeder extends Seeder
 
         $monday = Carbon::now()->startOfWeek(Carbon::MONDAY);
 
-        foreach (range(0, 1) as $weekOffset) {
+        // Six weeks of menus, starting from the Monday of the current week.
+        foreach (range(0, 5) as $weekOffset) {
             foreach (range(0, 4) as $dayOffset) {
                 $date = $monday->copy()->addWeeks($weekOffset)->addDays($dayOffset);
 
                 $menu = Menu::create([
                     'date' => $date,
                     'note' => $date->isFriday() ? 'Friday special: main course at a reduced price.' : null,
-                    'is_published' => $weekOffset === 0,
+                    'is_published' => $weekOffset <= 1,
                 ]);
 
                 $sortOrder = 1;

@@ -1,19 +1,39 @@
 <div class="flex flex-col gap-6">
 
     {{-- Controls --}}
-    <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div class="flex items-center gap-2">
-            <flux:button icon="chevron-left" wire:click="previousWeek" aria-label="Previous week" />
+    <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
 
-            <flux:button wire:click="goToToday" :disabled="$this->isCurrentWeek">
-                Today
-            </flux:button>
+        {{-- Week navigation --}}
+        <div class="flex flex-wrap items-end gap-3">
+            <div class="flex items-center gap-2">
+                <flux:button icon="chevron-left" wire:click="previousWeek" aria-label="Previous week" />
 
-            <flux:button icon="chevron-right" wire:click="nextWeek" aria-label="Next week" />
+                <flux:button wire:click="goToToday" :disabled="$this->isCurrentWeek">
+                    Today
+                </flux:button>
+
+                <flux:button icon="chevron-right" wire:click="nextWeek" aria-label="Next week" />
+            </div>
+
+            <div class="w-full sm:w-48">
+                <flux:input
+                    type="date"
+                    :value="$date"
+                    wire:change="jumpToDate($event.target.value)"
+                    label="Jump to a date"
+                />
+            </div>
         </div>
 
-        <div class="w-full sm:w-56">
-            <flux:input type="date" :value="$date" wire:change="jumpToDate($event.target.value)" label="Jump to a date" />
+        {{-- Actions --}}
+        <div>
+            <flux:button
+                icon="arrow-down-tray"
+                :href="route('menu.pdf', ['week' => $this->weekStart->toDateString()])"
+                target="_blank"
+            >
+                Download PDF
+            </flux:button>
         </div>
     </div>
 
@@ -76,7 +96,7 @@
 
                         @if ($menu && ! $menu->is_published)
                             <div>
-                                <flux:badge size="sm" color="amber" icon="eye-slash">Draft</flux:badge>
+                                <flux:badge size="sm" color="zinc" icon="eye-slash">Draft</flux:badge>
                             </div>
                         @endif
 
