@@ -2,11 +2,19 @@
 
     {{-- Hero --}}
     <div class="flex flex-col gap-4">
-        <flux:heading size="xl">Today at the canteen</flux:heading>
+        <div class="flex items-center gap-3">
+            <div class="flex size-12 items-center justify-center rounded-xl bg-accent-content text-accent-foreground">
+                <flux:icon.utensils-crossed class="size-7" />
+            </div>
+
+            <div class="flex flex-col">
+                <flux:heading size="xl">CanteenMenu</flux:heading>
+                <flux:text size="sm" class="text-zinc-500">Fresh meals, every weekday</flux:text>
+            </div>
+        </div>
 
         <flux:text class="max-w-2xl text-zinc-500">
-            Fresh meals prepared daily in our kitchen. Browse the full menu, check what's being served this week,
-            and filter by your dietary preferences.
+            Browse the full menu, check what's being served this week, and filter by your dietary preferences.
         </flux:text>
 
         <div class="flex flex-wrap gap-2">

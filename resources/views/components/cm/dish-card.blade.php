@@ -4,9 +4,9 @@
 
     <div class="aspect-[4/3] w-full overflow-hidden bg-zinc-100 dark:bg-zinc-800">
         @if ($dish->image_url)
-            <img src="{{ $dish->image_url }}" alt="{{ $dish->name }}" loading="lazy" class="size-full origin-center object-cover transition duration-300 will-change-transform group-hover:scale-105">
+            <img wire:key="dish-image-{{ $dish->id }}" src="{{ $dish->image_url }}" alt="{{ $dish->name }}" loading="lazy" class="size-full origin-center object-cover transition duration-300 will-change-transform group-hover:scale-105">
         @else
-            <div class="flex size-full items-center justify-center">
+            <div wire:key="dish-noimage-{{ $dish->id }}" class="flex size-full items-center justify-center">
                 <flux:icon.photo class="size-10 text-zinc-300 dark:text-zinc-600" />
             </div>
         @endif
