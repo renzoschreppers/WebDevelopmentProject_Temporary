@@ -31,9 +31,7 @@ class Dashboard extends Component
         ];
     }
 
-    /**
-     * The next ten weekdays, each with its menu status.
-     */
+    // The next ten weekdays, each with its menu status.
     #[Computed]
     public function upcoming()
     {
@@ -73,9 +71,7 @@ class Dashboard extends Component
         ];
     }
 
-    /**
-     * Dish counts per category, for the chart.
-     */
+    // Dish counts per category, for the chart.
     #[Computed]
     public function dishesPerCategory(): array
     {

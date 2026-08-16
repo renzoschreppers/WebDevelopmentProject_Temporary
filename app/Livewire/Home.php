@@ -13,8 +13,8 @@ use Livewire\Component;
 #[Layout('components.layouts.canteen', ['title' => 'Welcome'])]
 class Home extends Component
 {
-    /* Today's published menu, or the next upcoming one if the canteen
-    is closed today (weekends, holidays, or nothing planned). */
+    /* Today's published menu, or the next upcoming one if the canteen is closed today (weekends, holidays, or
+    nothing planned). */
     #[Computed]
     public function menu(): ?Menu
     {
@@ -35,7 +35,7 @@ class Home extends Component
         return $this->menu?->date->isToday() ?? false;
     }
 
-    /* A few dishes to browse, favouring ones with a photo. */
+    // A few dishes to browse, favoring ones with a photo.
     #[Computed]
     public function featured()
     {

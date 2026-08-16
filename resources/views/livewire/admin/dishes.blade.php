@@ -1,5 +1,3 @@
-@use('Illuminate\Support\Facades\Storage')
-
 <div class="flex flex-col gap-6">
 
     {{-- Toolbar --}}
@@ -221,7 +219,7 @@
                         @if ($form->newImage)
                             <img src="{{ $form->newImage->temporaryUrl() }}" alt="Preview" class="size-full object-cover">
                         @elseif ($form->image)
-                            <img src="{{ Storage::disk('public')->url($form->image) }}?v={{ time() }}" alt="Current image" class="size-full object-cover">
+                            <img src="{{ asset('storage/'.$form->image) }}?v={{ time() }}" alt="Current image" class="size-full object-cover">
                         @else
                             <div class="flex size-full items-center justify-center">
                                 <flux:icon.photo class="size-8 text-zinc-300 dark:text-zinc-600" />

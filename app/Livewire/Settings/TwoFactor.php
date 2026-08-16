@@ -36,9 +36,7 @@ class TwoFactor extends Component
     #[Validate('required|string|size:6', onUpdate: false)]
     public string $code = '';
 
-    /**
-     * Mount the component.
-     */
+    // Mount the component.
     public function mount(DisableTwoFactorAuthentication $disableTwoFactorAuthentication): void
     {
         abort_unless(Features::enabled(Features::twoFactorAuthentication()), Response::HTTP_FORBIDDEN);
@@ -51,9 +49,7 @@ class TwoFactor extends Component
         $this->requiresConfirmation = Features::optionEnabled(Features::twoFactorAuthentication(), 'confirm');
     }
 
-    /**
-     * Enable two-factor authentication for the user.
-     */
+    // Enable two-factor authentication for the user.
     public function enable(EnableTwoFactorAuthentication $enableTwoFactorAuthentication): void
     {
         $enableTwoFactorAuthentication(auth()->user());
@@ -67,9 +63,7 @@ class TwoFactor extends Component
         $this->showModal = true;
     }
 
-    /**
-     * Load the two-factor authentication setup data for the user.
-     */
+    // Load the two-factor authentication setup data for the user.
     private function loadSetupData(): void
     {
         $user = auth()->user();
@@ -84,9 +78,7 @@ class TwoFactor extends Component
         }
     }
 
-    /**
-     * Show the two-factor verification step if necessary.
-     */
+    // Show the two-factor verification step if necessary.
     public function showVerificationIfNecessary(): void
     {
         if ($this->requiresConfirmation) {
@@ -100,9 +92,7 @@ class TwoFactor extends Component
         $this->closeModal();
     }
 
-    /**
-     * Confirm two-factor authentication for the user.
-     */
+    // Confirm two-factor authentication for the user.
     public function confirmTwoFactor(ConfirmTwoFactorAuthentication $confirmTwoFactorAuthentication): void
     {
         $this->validate();
@@ -114,9 +104,7 @@ class TwoFactor extends Component
         $this->twoFactorEnabled = true;
     }
 
-    /**
-     * Reset two-factor verification state.
-     */
+    // Reset two-factor verification state.
     public function resetVerification(): void
     {
         $this->reset('code', 'showVerificationStep');
@@ -124,9 +112,7 @@ class TwoFactor extends Component
         $this->resetErrorBag();
     }
 
-    /**
-     * Disable two-factor authentication for the user.
-     */
+    // Disable two-factor authentication for the user.
     public function disable(DisableTwoFactorAuthentication $disableTwoFactorAuthentication): void
     {
         $disableTwoFactorAuthentication(auth()->user());
@@ -134,9 +120,7 @@ class TwoFactor extends Component
         $this->twoFactorEnabled = false;
     }
 
-    /**
-     * Close the two-factor authentication modal.
-     */
+    // Close the two-factor authentication modal.
     public function closeModal(): void
     {
         $this->reset(
@@ -154,9 +138,7 @@ class TwoFactor extends Component
         }
     }
 
-    /**
-     * Get the current modal configuration state.
-     */
+    // Get the current modal configuration state.
     public function getModalConfigProperty(): array
     {
         if ($this->twoFactorEnabled) {

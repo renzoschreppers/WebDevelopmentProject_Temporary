@@ -54,8 +54,8 @@ class DishForm extends Form
         ];
     }
 
-    /* Fill the form from a model, including the many-to-many tag selection
-    which fill() cannot handle on its own. */
+    /* Fill the form from a model, including the many-to-many tag selection which fill() cannot handle on its
+    own. */
     public function setDish(Dish $dish): void
     {
         $this->fill($dish);
@@ -100,8 +100,8 @@ class DishForm extends Form
         ];
     }
 
-    /* Resize the uploaded image to a square thumbnail and store it.
-    Named after the dish id so each dish has at most one image file. */
+    /* Resize the uploaded image to a square thumbnail and store it. Named after the dish id so each dish has at
+    most one image file. */
     protected function storeImage(Dish $dish): void
     {
         if (! $this->newImage) {

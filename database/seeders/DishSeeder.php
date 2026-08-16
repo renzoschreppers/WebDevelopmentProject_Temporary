@@ -11,9 +11,6 @@ use Illuminate\Support\Str;
 
 class DishSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         // Uploaded dish images no longer match any dish after a fresh seed.

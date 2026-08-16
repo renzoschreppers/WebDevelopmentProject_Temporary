@@ -36,8 +36,8 @@ class CategoryForm extends Form
         ];
     }
 
-    /* Insert this category at the requested position and renumber the rest,
-    so sort_order values stay unique and gap-free. */
+    /* Insert this category at the requested position and renumber the rest, so sort_order values stay unique and
+    gap-free. */
     protected function resequence(Category $category): void
     {
         DB::transaction(function () use ($category) {

@@ -17,17 +17,13 @@ class DietaryTagForm extends Form
 
     public string $color = 'zinc';
 
-    /**
-     * Lucide/Heroicon names that have been imported with `php artisan flux:icon`.
-     */
+    // Lucide/Heroicon names that have been imported with `php artisan flux:icon`.
     public const ICONS = [
         'leaf', 'sprout', 'wheat-off', 'milk-off', 'nut', 'flame',
         'fish', 'egg', 'star', 'heart', 'check-badge', 'exclamation-triangle',
     ];
 
-    /**
-     * Flux badge colours.
-     */
+    // Flux badge colours.
     public const COLORS = [
         'zinc', 'red', 'orange', 'amber', 'yellow', 'lime', 'green',
         'emerald', 'teal', 'cyan', 'sky', 'blue', 'indigo', 'violet',

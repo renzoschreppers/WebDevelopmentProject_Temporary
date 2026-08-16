@@ -21,9 +21,7 @@ class WeekMenu extends Component
         $this->date = $this->parseDate($this->date)->toDateString();
     }
 
-    /**
-     * Parse a date string safely, falling back to today.
-     */
+    // Parse a date string safely, falling back to today.
     protected function parseDate(?string $value): Carbon
     {
         try {
@@ -39,9 +37,7 @@ class WeekMenu extends Component
         return $this->parseDate($this->date)->startOfWeek(Carbon::MONDAY);
     }
 
-    /**
-     * Monday to Friday of the selected week.
-     */
+    // Monday to Friday of the selected week.
     #[Computed]
     public function weekDays()
     {
@@ -61,9 +57,7 @@ class WeekMenu extends Component
         return $this->weekStart->isSameWeek(Carbon::today());
     }
 
-    /**
-     * Menus for this week, keyed by date so the view can look them up directly.
-     */
+    // Menus for this week, keyed by date so the view can look them up directly.
     #[Computed]
     public function menus()
     {
@@ -87,10 +81,8 @@ class WeekMenu extends Component
         return DietaryTag::orderBy('name')->get();
     }
 
-    /**
-     * The day that should be expanded on mobile: the same weekday as today,
-     * clamped to Friday when today falls on a weekend.
-     */
+    /* The day that should be expanded on mobile: the same weekday as today, clamped to Friday when today falls
+    on a weekend. */
     #[Computed]
     public function defaultOpenDay(): string
     {
@@ -114,8 +106,8 @@ class WeekMenu extends Component
         $this->setDate(Carbon::today());
     }
 
-    /* Change the selected date and clear the cached computed properties,
-    otherwise the view would render with the previous week's data. */
+    /* Change the selected date and clear the cached computed properties, otherwise the view would render with
+    the previous week's data. */
     protected function setDate(Carbon $date): void
     {
         $this->date = $date->toDateString();

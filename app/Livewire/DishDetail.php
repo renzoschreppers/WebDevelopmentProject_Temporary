@@ -20,7 +20,7 @@ class DishDetail extends Component
         $this->dish = $dish->load(['category', 'dietaryTags']);
     }
 
-    /* Published menus from today onwards that include this dish. */
+    // Published menus from today onwards that include this dish.
     #[Computed]
     public function upcomingMenus()
     {
@@ -33,7 +33,7 @@ class DishDetail extends Component
             ->get();
     }
 
-    /* Other dishes in the same category. */
+    // Other dishes in the same category.
     #[Computed]
     public function related()
     {

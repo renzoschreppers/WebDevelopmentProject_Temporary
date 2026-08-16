@@ -1,4 +1,4 @@
-const NAME = "Surname_Name_class";
+const NAME = "Schreppers_Renzo_2APPAI";
 
 const zl = require("zip-lib");
 

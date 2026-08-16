@@ -10,9 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class MenuPdfController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
+    // Handle the incoming request.
     public function __invoke(Request $request): Response
     {
         $weekStart = $this->parseDate($request->query('week'))->startOfWeek(Carbon::MONDAY);

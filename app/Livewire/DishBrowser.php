@@ -26,7 +26,7 @@ class DishBrowser extends Component
     #[Url]
     public array $tags = [];
 
-    /** Null means no price limit. */
+    // Null means no price limit.
     #[Url]
     public ?string $maxPrice = null;
 
@@ -42,8 +42,8 @@ class DishBrowser extends Component
         }
     }
 
-    /* The slider reports its raw value; treat the ceiling as "no limit"
-    so the URL stays clean when nothing is actually filtered. */
+    /* The slider reports its raw value; treat the ceiling as "no limit" so the URL stays clean when nothing is
+    actually filtered. */
     public function setMaxPrice(string $value): void
     {
         $this->maxPrice = (float) $value >= $this->priceCeiling ? null : $value;

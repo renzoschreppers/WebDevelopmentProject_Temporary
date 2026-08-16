@@ -18,7 +18,6 @@ class MenuPlanner extends Component
 
     public Menu $menu;
 
-    /* The course new dishes are added to. */
     public string $course = 'main';
 
     public string $search = '';
@@ -36,7 +35,7 @@ class MenuPlanner extends Component
         $this->menu = $menu;
     }
 
-    /* Dishes on this menu, grouped by course and ordered within each course. */
+    // Dishes on this menu, grouped by course and ordered within each course.
     #[Computed]
     public function planned()
     {
@@ -54,7 +53,7 @@ class MenuPlanner extends Component
         return $this->menu->dishes()->pluck('dishes.id')->all();
     }
 
-    /* Dishes available to add, filtered by the search panel. */
+    // Dishes available to add, filtered by the search panel.
     #[Computed]
     public function available()
     {
@@ -75,7 +74,7 @@ class MenuPlanner extends Component
         return count($this->plannedIds);
     }
 
-    /* Other menus that have dishes, for the copy feature. */
+    // Other menus that have dishes, for the copy feature.
     #[Computed]
     public function copyableMenus()
     {
@@ -126,7 +125,7 @@ class MenuPlanner extends Component
         $this->toastSuccess("<b>{$dish->name}</b> removed from this menu.");
     }
 
-    /* Swap a dish with its neighbor inside the same course. */
+    // Swap a dish with its neighbor inside the same course.
     public function move(int $dishId, string $direction): void
     {
         $course = $this->menu->dishes()

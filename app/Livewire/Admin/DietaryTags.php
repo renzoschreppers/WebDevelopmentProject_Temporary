@@ -69,10 +69,8 @@ class DietaryTags extends Component
         $this->showDishesModal = true;
     }
 
-    /**
-     * Deleting a tag cascades: it is removed from every dish that uses it.
-     * The database will not stop this, so the warning has to be explicit.
-     */
+    /* Deleting a tag cascades: it is removed from every dish that uses it. The database will not stop this, so
+    the warning has to be explicit. */
     public function deleteConfirm(DietaryTag $tag): void
     {
         $count = $tag->dishes()->count();

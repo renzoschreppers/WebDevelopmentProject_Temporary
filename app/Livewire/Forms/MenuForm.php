@@ -32,8 +32,8 @@ class MenuForm extends Form
             'date' => [
                 'required',
                 'date',
-                /* Compare date-only: the column stores a datetime, so a plain
-                unique rule would never match an existing row. */
+                /* Compare date-only: the column stores a datetime, so a plain unique rule would never match an
+                existing row. */
                 fn ($attribute, $value, $fail) => Menu::whereDate('date', $value)
                     ->when($this->id, fn ($query) => $query->whereKeyNot($this->id))
                     ->exists()

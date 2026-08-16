@@ -22,13 +22,14 @@ use App\Livewire\WeekMenu;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
+// Public routes - no authentication required
 Route::get('/', Home::class)->name('home');
-
 Route::get('menu', WeekMenu::class)->name('menu');
 Route::get('dishes', DishBrowser::class)->name('dishes');
 Route::get('dishes/{dish}', DishDetail::class)->name('dishes.show');
 Route::get('menu/pdf', MenuPdfController::class)->name('menu.pdf');
 
+// Logged-in users only
 Route::middleware(['auth', ActiveUser::class])->group(function () {
     Route::redirect('settings', 'settings/profile');
 
@@ -50,6 +51,7 @@ Route::middleware(['auth', ActiveUser::class])->group(function () {
     Route::get('favorites', Favorites::class)->name('favorites');
 });
 
+// Administrators only
 Route::middleware(['auth', ActiveUser::class, Admin::class])
     ->prefix('admin')
     ->name('admin.')

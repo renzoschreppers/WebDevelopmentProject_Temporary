@@ -9,9 +9,6 @@ use Illuminate\Support\Str;
 
 class DietaryTagSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $tags = [

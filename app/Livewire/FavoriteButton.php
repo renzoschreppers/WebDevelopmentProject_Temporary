@@ -35,8 +35,8 @@ class FavoriteButton extends Component
 
         $user = auth()->user();
 
-        /* Read the current state from the database rather than trusting
-        $this->isFavorited, which can drift from rapid clicks or navigation. */
+        /* Read the current state from the database rather than trusting $this->isFavorited, which can drift from
+        rapid clicks or navigation. */
         if ($user->favorites()->whereKey($this->dish->id)->exists()) {
             $user->favorites()->detach($this->dish->id);
             $this->isFavorited = false;

@@ -10,9 +10,6 @@ use Illuminate\Support\Carbon;
 
 class MenuSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $byCategory = Category::with(['dishes' => fn ($query) => $query->where('is_available', true)])

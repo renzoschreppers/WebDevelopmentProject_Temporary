@@ -21,9 +21,7 @@ class Register extends Component
 
     public string $password_confirmation = '';
 
-    /**
-     * Handle an incoming registration request.
-     */
+    // Handle an incoming registration request.
     public function register(): void
     {
         $validated = $this->validate([
